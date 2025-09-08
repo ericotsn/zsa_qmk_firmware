@@ -1,0 +1,11 @@
+{
+    "usb": {
+        "vid": "0x3297",
+        "pid": "0x1972",
+        "device_version": "0.0.1",
+        "shared_endpoint": {
+            "mouse": false
+        }
+    },
+    "bootloader": "custom"
+}
