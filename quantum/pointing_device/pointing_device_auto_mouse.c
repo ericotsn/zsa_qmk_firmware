@@ -320,9 +320,6 @@ void auto_mouse_reset_trigger(bool pressed) {
 #ifdef LAYER_LOCK_ENABLE
         if(is_layer_locked(AUTO_MOUSE_DEFAULT_LAYER)) return;
 #endif
-        if (layer_state_is((AUTO_MOUSE_TARGET_LAYER))) {
-            layer_off((AUTO_MOUSE_TARGET_LAYER));
-        };
         auto_mouse_reset();
     }
     auto_mouse_context.timer.delay = timer_read();
