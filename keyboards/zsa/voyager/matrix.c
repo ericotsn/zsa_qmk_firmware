@@ -93,7 +93,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 #ifdef RGB_MATRIX_ENABLE
                 rgb_matrix_init();
                 // Required to recover the solid color mode
-                if (rgb_matrix_get_mode() == 1) {
+                if (rgb_matrix_get_mode() == 1 && rgb_matrix_is_enabled()) {
                     rgb_matrix_set_color_all(255, 255, 255);
                 }
 #endif
