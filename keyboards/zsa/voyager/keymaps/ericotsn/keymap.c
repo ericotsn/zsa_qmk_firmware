@@ -18,9 +18,9 @@ enum keycode_aliases {
     PRV_TAB = LCTL(LSFT(KC_TAB)),
     NXT_TAB = LCTL(KC_TAB),
 
-    HRM_N = RSFT_T(KC_N),
+    HRM_E = RSFT_T(KC_E),
     HRM_O = RGUI_T(KC_O),
-    HRM_T = LSFT_T(KC_T),
+    HRM_S = LSFT_T(KC_S),
     HRM_A = LGUI_T(KC_A),
 
     CTL_BSP = CTL_T(KC_BSPC),
@@ -34,13 +34,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_LR( // Base layer (Colemak-DH)
         XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
-        OS_LSFT, HRM_A,   KC_R,    KC_S,    HRM_T,   KC_G,
+        OS_LSFT, HRM_A,   KC_R,    HRM_S,   KC_T,    KC_G,
         KC_UNDS, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,
                                                      CTL_BSP, SYM_ESC,
 
                  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
                  KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
-                 KC_M,    HRM_N,   KC_E,    KC_I,    HRM_O,   OS_RSFT,
+                 KC_M,    KC_N,    HRM_E,   KC_I,    HRM_O,   OS_RSFT,
                  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
         NAV_ENT, ALT_SPC
     ),
