@@ -96,6 +96,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case CTL_BSP:
+            return 0; // Disable auto-repeat
+        default:
+            return QUICK_TAP_TERM;
+    }
+}
+
 bool is_flow_tap_key(uint16_t keycode) {
     if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
         return false; // Disable Flow Tap on hotkeys
