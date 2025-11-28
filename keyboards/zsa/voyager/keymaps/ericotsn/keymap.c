@@ -18,31 +18,30 @@ enum keycode_aliases {
     PRV_TAB = LCTL(LSFT(KC_TAB)),
     NXT_TAB = LCTL(KC_TAB),
 
-    HRM_E = RSFT_T(KC_E),
-    HRM_O = RGUI_T(KC_O),
-    HRM_S = LSFT_T(KC_S),
     HRM_A = LGUI_T(KC_A),
+    HRM_R = LALT_T(KC_R),
+    HRM_S = LCTL_T(KC_S),
+    HRM_E = RCTL_T(KC_E),
+    HRM_I = RALT_T(KC_I),
+    HRM_O = RGUI_T(KC_O),
 
-    CTL_BSP = CTL_T(KC_BSPC),
-    ALT_SPC = ALT_T(KC_SPC),
-
-    NAV_ENT = LT(NAV, KC_ENT),
-    SYM_ESC = LT(SYM, KC_ESC),
+    SYM_BSP = LT(SYM, KC_BSPC),
+    NAV_SPC = LT(NAV, KC_SPC),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_LR( // Base layer (Colemak-DH)
         XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
-        OS_LSFT, HRM_A,   KC_R,    HRM_S,   KC_T,    KC_G,
+        OS_LSFT, HRM_A,   HRM_R,   HRM_S,   KC_T,    KC_G,
         KC_UNDS, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,
-                                                     CTL_BSP, SYM_ESC,
+                                                     SYM_BSP, KC_ESC,
 
                  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
                  KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
-                 KC_M,    KC_N,    HRM_E,   KC_I,    HRM_O,   OS_RSFT,
+                 KC_M,    KC_N,    HRM_E,   HRM_I,   HRM_O,   OS_RSFT,
                  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-        NAV_ENT, ALT_SPC
+        KC_ENT,  NAV_SPC
     ),
     [SYM] = LAYOUT_LR( // Symbol layer
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
@@ -87,24 +86,27 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
         '*', '*'
     );
 
+// https://docs.qmk.fm/tap_hold#tapping-term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case ALT_SPC:
-            return TAPPING_TERM - 100;
+        case NAV_SPC:
+            return TAPPING_TERM - 75;
         default:
             return TAPPING_TERM;
     }
 }
 
+// https://docs.qmk.fm/tap_hold#quick-tap-term
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case CTL_BSP:
+        case SYM_BSP:
             return 0; // Disable auto-repeat
         default:
             return QUICK_TAP_TERM;
     }
 }
 
+// https://docs.qmk.fm/tap_hold#flow-tap
 bool is_flow_tap_key(uint16_t keycode) {
     if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
         return false; // Disable Flow Tap on hotkeys
@@ -120,10 +122,10 @@ bool is_flow_tap_key(uint16_t keycode) {
     return false;
 }
 
+// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case CTL_BSP:
-        case SYM_ESC:
+        case SYM_BSP:
             return true;
         default:
             return false;
