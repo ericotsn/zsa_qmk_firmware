@@ -3,13 +3,11 @@
 
 #pragma once
 
-#define TAPPING_TERM 250
-#define TAPPING_TERM_PER_KEY
-#define QUICK_TAP_TERM_PER_KEY
-#define FLOW_TAP_TERM 75
+#define TAPPING_TERM 240
+#define FLOW_TAP_TERM 100
 #define CHORDAL_HOLD
-#define PERMISSIVE_HOLD
-#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS
+#define QUICK_TAP_TERM 0 // Disable auto-repeat for tap-hold keys
 
 // See https://docs.qmk.fm/features/rgb_matrix#rgb-matrix-effects
 #ifdef RGB_MATRIX_ENABLE
