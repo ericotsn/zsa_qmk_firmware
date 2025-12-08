@@ -84,6 +84,18 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
         '*', '*'
     );
 
+// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case CTL_BSP:
+        case SYM_X:
+        case SYM_DOT:
+            return true;
+        default:
+            return false;
+    }
+}
+
 // https://docs.qmk.fm/tap_hold#flow-tap
 bool is_flow_tap_key(uint16_t keycode) {
     if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
