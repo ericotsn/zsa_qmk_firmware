@@ -9,6 +9,7 @@ enum layers {
     BASE,
     SYM,
     NAV,
+    MSE,
 };
 
 enum keycode_aliases {
@@ -25,6 +26,7 @@ enum keycode_aliases {
     SYM_DOT = LT(SYM, KC_DOT),
 
     NAV_ENT = LT(NAV, KC_ENT),
+    MSE_ESC = LT(MSE, KC_ESC),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -33,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
         OS_LSFT, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,
         KC_LGUI, KC_Z,    SYM_X,   KC_C,    KC_D,    KC_V,
-                                                     CTL_BSP, KC_ESC,
+                                                     CTL_BSP, MSE_ESC,
 
                  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
                  KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
@@ -67,6 +69,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  _______, PRV_TAB, NXT_TAB, _______, _______, _______,
         _______, _______
     ),
+    [MSE] = LAYOUT_LR( // Mouse layer
+        _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,
+        _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,
+        _______, C(KC_Z), C(KC_X), C(KC_C), _______, C(KC_V),
+                                                     _______, _______,
+
+                 _______, _______, _______, _______, _______, _______,
+                 OM_W_U,  OM_BTN4, OM_U,    OM_BTN5, OM_FAST, _______,
+                 OM_W_D,  OM_L,    OM_D,    OM_R,    OM_SLOW, _______,
+                 _______, _______, _______, _______, _______, _______,
+        OM_BTN2, OM_BTN1
+    ),
 };
 
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
@@ -88,6 +103,7 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case CTL_BSP:
+        case MSE_ESC:
         case SYM_X:
         case SYM_DOT:
             return true;
