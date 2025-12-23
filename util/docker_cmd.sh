@@ -75,5 +75,5 @@ fi
 	-e SKIP_GIT="$SKIP_GIT" \
 	-e SKIP_VERSION="$SKIP_VERSION" \
 	-e MAKEFLAGS="$MAKEFLAGS" \
-	ghcr.io/qmk/qmk_cli \
+	ghcr.io/qmk/qmk_cli@sha256:2dc05fc9f32efebd6b05c2b8676ee548358bc7e151e9dbf4dac6b6eed4513b07 \
 	"$@"
