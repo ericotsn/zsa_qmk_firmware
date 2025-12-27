@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
                  KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  KC_UNDS, KC_F12,
-                 KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, KC_DQUO, CW_TOGG,
+                 KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, KC_DQUO, _______,
                  KC_AT,   KC_COLN, KC_COMM, KC_DOT,  KC_QUES, _______,
         _______, _______
     ),
@@ -71,6 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
+// https://docs.qmk.fm/tap_hold#chordal-hold
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
     LAYOUT_LR( // Handedness for Chordal Hold
         '*', '*', '*', '*', '*', '*',
@@ -86,6 +87,18 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
         '*', '*'
     );
 
+// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case CTL_BSP:
+        case SYM_X:
+        case SYM_DOT:
+            return true;
+        default:
+            return false;
+    }
+}
+
 // https://docs.qmk.fm/tap_hold#flow-tap
 bool is_flow_tap_key(uint16_t keycode) {
     if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
@@ -94,7 +107,7 @@ bool is_flow_tap_key(uint16_t keycode) {
     switch (get_tap_keycode(keycode)) {
         case KC_SPC:
         case KC_A ... KC_W:
-        case KC_Y ... KC_Z: // Exclude KC_X to improve typing delay
+        case KC_Y ... KC_Z:
         case KC_COMM:
         case KC_SCLN:
         case KC_SLSH:
