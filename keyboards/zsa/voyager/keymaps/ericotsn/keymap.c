@@ -9,7 +9,6 @@ enum layers {
     BASE,
     SYM,
     NAV,
-    MSE,
 };
 
 enum keycode_aliases {
@@ -19,17 +18,15 @@ enum keycode_aliases {
     PRV_TAB = LCTL(LSFT(KC_TAB)),
     NXT_TAB = LCTL(KC_TAB),
 
-    CTL_BSP = LCTL_T(KC_BSPC),
-    ALT_SPC = LALT_T(KC_SPC),
+    GUI_A = LGUI_T(KC_A),
+    GUI_O = RGUI_T(KC_O),
 
     SYM_X = LT(SYM, KC_X),
     SYM_DOT = LT(SYM, KC_DOT),
 
-    GUI_A = LGUI_T(KC_A),
-    GUI_O = RGUI_T(KC_O),
-
-    NAV_ENT = LT(NAV, KC_ENT),
-    MSE_ESC = LT(MSE, KC_ESC),
+    CTL_BSP = LCTL_T(KC_BSPC),
+    ALT_SPC = LALT_T(KC_SPC),
+    NAV_ESC = LT(NAV, KC_ESC),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -38,13 +35,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
         OS_LSFT, GUI_A,   KC_R,    KC_S,    KC_T,    KC_G,
         _______, KC_Z,    SYM_X,   KC_C,    KC_D,    KC_V,
-                                                     CTL_BSP, MSE_ESC,
+                                                     CTL_BSP, NAV_ESC,
 
                  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
                  KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
                  KC_M,    KC_N,    KC_E,    KC_I,    GUI_O,   OS_RSFT,
                  KC_K,    KC_H,    KC_COMM, SYM_DOT, KC_SLSH, _______,
-        NAV_ENT, ALT_SPC
+        KC_ENT,  ALT_SPC
     ),
     [SYM] = LAYOUT_LR( // Symbol layer
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
@@ -55,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
                  KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  KC_UNDS, KC_F12,
-                 KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, KC_DQUO, _______,
+                 KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, KC_DQUO, CW_TOGG,
                  KC_AT,   KC_COLN, KC_COMM, KC_DOT,  KC_QUES, _______,
         _______, _______
     ),
@@ -71,19 +68,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
                  _______, PRV_TAB, NXT_TAB, _______, _______, _______,
         _______, _______
-    ),
-    [MSE] = LAYOUT_LR( // Mouse layer
-        _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,
-        _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,
-        _______, C(KC_Z), C(KC_X), C(KC_C), _______, C(KC_V),
-                                                     _______, _______,
-
-                 _______, _______, _______, _______, _______, _______,
-                 OM_W_U,  OM_BTN4, OM_U,    OM_BTN5, OM_FAST, _______,
-                 OM_W_D,  OM_L,    OM_D,    OM_R,    OM_SLOW, _______,
-                 _______, _______, _______, _______, _______, _______,
-        OM_BTN2, OM_BTN1
     ),
 };
 
@@ -102,19 +86,6 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
         '*', '*'
     );
 
-// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case CTL_BSP:
-        case MSE_ESC:
-        case SYM_X:
-        case SYM_DOT:
-            return true;
-        default:
-            return false;
-    }
-}
-
 // https://docs.qmk.fm/tap_hold#flow-tap
 bool is_flow_tap_key(uint16_t keycode) {
     if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
@@ -123,7 +94,7 @@ bool is_flow_tap_key(uint16_t keycode) {
     switch (get_tap_keycode(keycode)) {
         case KC_SPC:
         case KC_A ... KC_W:
-        case KC_Y ... KC_Z:
+        case KC_Y ... KC_Z: // Exclude KC_X to improve typing delay
         case KC_COMM:
         case KC_SCLN:
         case KC_SLSH:

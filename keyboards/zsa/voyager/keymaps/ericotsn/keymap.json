@@ -2,6 +2,5 @@
     "modules": [
         "zsa/oryx",
         "zsa/defaults",
-        "getreuer/orbital_mouse"
     ]
 }
